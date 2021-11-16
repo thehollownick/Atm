@@ -81,6 +81,7 @@ public class ATMMachine {
                 ArrayList<Integer> values = new ArrayList<>();
                 keySet.addAll(moneys.keySet());
                 values.addAll(moneys.values());
+
                 int count = 0;
                 for (Integer i : values) {
                     count += i;
