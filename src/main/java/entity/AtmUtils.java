@@ -15,41 +15,42 @@ public class AtmUtils {
             throw new RuntimeException();
         }
         while (rub>0) {
-            if (rub > 5000 && moneysInAtm.get(5000) > 0) {
+            if (rub >= 5000 && moneysInAtm.get(5000) > 0) {
                 temp.merge(5000, 1, Integer::sum);
                 rub-=5000;
                 moneysInAtm.put(5000,moneysInAtm.get(5000)-1);
             }
-            else if (rub > 2000 && moneysInAtm.get(2000) > 0) {
+            else if (rub >= 2000 && moneysInAtm.get(2000) > 0) {
                 temp.merge(2000, 1, Integer::sum);
                 rub-=2000;
                 moneysInAtm.put(2000,moneysInAtm.get(2000)-1);
             }
-            else if (rub > 1000 && moneysInAtm.get(1000) > 0) {
+            else if (rub >= 1000 && moneysInAtm.get(1000) > 0) {
                 temp.merge(1000, 1, Integer::sum);
                 rub-=1000;
                 moneysInAtm.put(1000,moneysInAtm.get(1000)-1);
             }
-            else if (rub > 500 && moneysInAtm.get(500) > 0) {
+            else if (rub >= 500 && moneysInAtm.get(500) > 0) {
                 temp.merge(500, 1, Integer::sum);
                 rub-=500;
                 moneysInAtm.put(500,moneysInAtm.get(500)-1);
             }
-            else if (rub > 200 && moneysInAtm.get(200) > 0) {
+            else if (rub >= 200 && moneysInAtm.get(200) > 0) {
                 temp.merge(200, 1, Integer::sum);
                 rub-=200;
                 moneysInAtm.put(200,moneysInAtm.get(200)-1);
             }
-            else if (rub > 100 && moneysInAtm.get(100) > 0) {
+            else if (rub >= 100 && moneysInAtm.get(100) > 0) {
                 temp.merge(100, 1, Integer::sum);
                 rub-=100;
                 moneysInAtm.put(100,moneysInAtm.get(100)-1);
             }
-            else{
+            else {
                 LOGGER.error("Нет денег");
                 throw new RuntimeException();
             }
         }
+        LOGGER.debug("temp {}",temp);
         return temp;
     }
 }

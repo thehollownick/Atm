@@ -108,10 +108,8 @@ public class ATMMachine {
             throw new RuntimeException();
         }
         HashMap<Integer,Integer> result=AtmUtils.fromIntToMoneys(rub,moneys);
-        for (Integer i: moneys.keySet()) {
-            moneys.put(i,moneys.get(i)-result.get(i));
-        }
         new AtmDAO().update(this);
+        bank.dispenceMoney(rub,card.getBill());
         return result;
     }
 }

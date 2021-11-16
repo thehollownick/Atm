@@ -76,4 +76,11 @@ public class Bank {
         bill.setRub(balance);
         billDAO.update(bill);
     }
+
+    public void dispenceMoney(int rub, Bill bill) throws SQLException {
+        BillDAO billDAO = new BillDAO();
+        int balance = billDAO.getBalance(bill.getId()) - rub;
+        bill.setRub(balance);
+        billDAO.update(bill);
+    }
 }
