@@ -17,7 +17,7 @@ public class Main {
         Card card = new CardDAO().get(2);
         client.enterCard(client.getCards(),atmMachine);
         System.out.println(atmMachine.isCheckedPin());
-        HashMap<Integer,Integer> h = client.takeMoney(atmMachine,card,12000);
+        HashMap<Integer,Integer> h = client.takeAllMoney(atmMachine,card);
         System.out.println(h);
     }
 }

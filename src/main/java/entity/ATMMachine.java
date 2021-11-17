@@ -86,7 +86,9 @@ public class ATMMachine {
                 for (Integer i : values) {
                     count += i;
                 }
-                if (count > 40) throw new RuntimeException("More 40");
+                if (count > 40){
+                    LOGGER.error("Более 40 купюр");
+                    throw new RuntimeException();}
                 for (int i = 0; i < keySet.size(); i++) {
                     rub += keySet.get(i) * values.get(i);
                 }
@@ -108,8 +110,20 @@ public class ATMMachine {
             throw new RuntimeException();
         }
         HashMap<Integer,Integer> result=AtmUtils.fromIntToMoneys(rub,moneys);
+        int count = 0;
+            for (Integer i:result.values()) {
+                count+=i;
+        }
+        if(count>40) {
+            LOGGER.error("Более 40 купюр");
+            throw new RuntimeException();
+        }
         new AtmDAO().update(this);
         bank.dispenceMoney(rub,card.getBill());
         return result;
+    }
+
+    public HashMap<Integer,Integer> giveAllMoney(Card card) throws SQLException {
+        return giveMoney(card,new BillDAO().getBalance(card.getBill().getId()));
     }
 }

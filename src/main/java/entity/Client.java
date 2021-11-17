@@ -62,7 +62,7 @@ public class Client {
     public HashMap<Integer, Integer> takeMoney(ATMMachine atm, Card card, int rub) throws SQLException {
         return atm.giveMoney(card, rub);
     }
-    /*public  List<Integer> takeAllMoney(ATMMachine atm){
-
-    }*/
+    public  HashMap<Integer,Integer> takeAllMoney(ATMMachine atm, Card card) throws SQLException {
+        return atm.giveAllMoney(card);
+    }
 }
