@@ -1,20 +1,16 @@
 package entity;
 
 import dao.AtmDAO;
-import dao.BankDAO;
 import dao.BillDAO;
 import dao.CardDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rmi.BanksMethod;
 
-
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class Bank implements BanksMethod, Serializable {
     private int id;
