@@ -2,11 +2,12 @@ package entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
 @Data
-public class Card {
+public class Card implements Serializable {
     private int id;
     private String cardNumber;
     private Bill bill;
@@ -44,6 +45,10 @@ public class Card {
         this.client = client;
     }
 
+
+    public Card() {
+    }
+
     public Card(int id, String cardNumber, Bill bill, Client client) {
         this.id = id;
         this.cardNumber = cardNumber;
@@ -56,7 +61,7 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return id == card.id&&
+        return id == card.id &&
                 Objects.equals(cardNumber, card.cardNumber);
     }
 

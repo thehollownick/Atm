@@ -4,19 +4,25 @@ import dao.AtmDAO;
 import dao.BankDAO;
 import dao.BillDAO;
 import dao.CardDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rmi.BanksMethod;
 
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class Bank {
+public class Bank implements BanksMethod, Serializable {
     private int id;
     private String name;
-    private List<Bill> clientsBills;
-    private List<ATMMachine> atmMachines;
-    private HashMap<Card, Integer> pinCodes;
+    private transient List<Bill> clientsBills;
+    private transient List<ATMMachine> atmMachines;
+    private transient HashMap<Card, Integer> pinCodes;
+    private static final Logger LOGGER = LoggerFactory.getLogger(Bank.class);
 
     public int getId() {
         return id;
@@ -37,6 +43,9 @@ public class Bank {
     public Bank(int id, String name) throws SQLException {
         this.id = id;
         this.name = name;
+    }
+
+    public Bank() {
     }
 
     public List<Bill> getClientsBills() throws SQLException {
@@ -65,11 +74,13 @@ public class Bank {
         this.clientsBills = temp;
     }
 
+    @Override
     public boolean pinCheck(Card card, Integer pin) throws SQLException {
         Integer temp = getPinCodes().get(card);
         return temp.equals(pin);
     }
 
+    @Override
     public void depositMoney(int rub, Bill bill) throws SQLException {
         BillDAO billDAO = new BillDAO();
         int balance = rub + billDAO.getBalance(bill.getId());
@@ -77,9 +88,11 @@ public class Bank {
         billDAO.update(bill);
     }
 
+    @Override
     public void dispenceMoney(int rub, Bill bill) throws SQLException {
         BillDAO billDAO = new BillDAO();
         int balance = billDAO.getBalance(bill.getId()) - rub;
+        LOGGER.debug("balance {}", balance);
         bill.setRub(balance);
         billDAO.update(bill);
     }

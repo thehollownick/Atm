@@ -3,15 +3,16 @@ package entity;
 import dao.BillDAO;
 
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Objects;
 
 
-public class Bill {
+public class Bill implements Serializable {
     private int id;
     private int rub;
     private int penny;
-    private Bank bank;
+    private  Bank bank;
 
     public int getId() {
         return id;
@@ -52,4 +53,6 @@ public class Bill {
         this.bank = bank;
     }
 
+    public Bill() {
+    }
 }

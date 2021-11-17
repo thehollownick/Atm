@@ -4,6 +4,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import java.util.HashMap;
 
 public class Main {
     private static final Logger LOGGER= LoggerFactory.getLogger(Main.class);
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, RemoteException, NotBoundException {
         Client client = new ClientDAO().get(2);
         ATMMachine atmMachine = new AtmDAO().get(1);
         Card card = new CardDAO().get(2);

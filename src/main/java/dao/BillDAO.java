@@ -1,7 +1,10 @@
 package dao;
 
 import dao.executor.Executor;
+import entity.ATMMachine;
 import entity.Bill;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +13,7 @@ import java.util.List;
 public class BillDAO implements DAO<Bill, Integer> {
     private final Executor executor;
     private final BankDAO bankDAO;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(BillDAO.class);
     public BillDAO() throws SQLException {
         this.executor = new Executor();
         this.bankDAO = new BankDAO();
@@ -42,6 +45,7 @@ public class BillDAO implements DAO<Bill, Integer> {
 
     @Override
     public void update(Bill bill) throws SQLException {
+        LOGGER.error("bill {}",bill);
         executor.execUpdate("UPDATE BILL SET " +
                         TableColumns.BillTable.RUB + " = ?," +
                         TableColumns.BillTable.PENNY + " = ?," +

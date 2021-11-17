@@ -2,16 +2,19 @@ package entity;
 
 import dao.CardDAO;
 
+import java.io.Serializable;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
 import java.util.Map;
 
-public class Client {
+public class Client implements Serializable {
     private int id;
     private String name;
     private String surname;
-    private HashMap<Card, Integer> cards;
+    private transient HashMap<Card, Integer> cards;
 
     public int getId() {
         return id;
@@ -51,18 +54,21 @@ public class Client {
         this.surname = surname;
     }
 
-    public void enterCard(HashMap<Card, Integer> card, ATMMachine atmMachine) throws SQLException {
+    public Client() {
+    }
+
+    public void enterCard(HashMap<Card, Integer> card, ATMMachine atmMachine) throws SQLException, RemoteException, NotBoundException {
         atmMachine.checkPin(card);
     }
 
-    public void depositMoney(ATMMachine atm, Card card, HashMap<Integer, Integer> moneys) throws SQLException {
+    public void depositMoney(ATMMachine atm, Card card, HashMap<Integer, Integer> moneys) throws SQLException, RemoteException, NotBoundException {
         atm.depositMoney(card, moneys);
     }
 
-    public HashMap<Integer, Integer> takeMoney(ATMMachine atm, Card card, int rub) throws SQLException {
+    public HashMap<Integer, Integer> takeMoney(ATMMachine atm, Card card, int rub) throws SQLException, RemoteException, NotBoundException {
         return atm.giveMoney(card, rub);
     }
-    public  HashMap<Integer,Integer> takeAllMoney(ATMMachine atm, Card card) throws SQLException {
+    public  HashMap<Integer,Integer> takeAllMoney(ATMMachine atm, Card card) throws SQLException, RemoteException, NotBoundException {
         return atm.giveAllMoney(card);
     }
 }
