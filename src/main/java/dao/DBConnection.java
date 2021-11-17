@@ -10,15 +10,18 @@ public class DBConnection {
     private static final String user = "root";
     private static final String pass = "1234";
     private static DBConnection instance;
+
     public DBConnection() throws SQLException {
-        connection= DriverManager.getConnection(url,user,pass);
+        connection = DriverManager.getConnection(url, user, pass);
     }
+
     public static DBConnection getInstance() throws SQLException {
-        if(instance==null)
-            instance=new DBConnection();
+        if (instance == null)
+            instance = new DBConnection();
         return instance;
     }
-    public Connection getConnection(){
+
+    public Connection getConnection() {
         return connection;
     }
 }

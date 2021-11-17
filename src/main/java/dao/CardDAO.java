@@ -72,40 +72,41 @@ public class CardDAO implements DAO<Card, Integer> {
                         result.getInt(TableColumns.CardTable.ID),
                         result.getString(TableColumns.CardTable.NUMBER),
                         billDAO.get(result.getInt(TableColumns.CardTable.BILL_ID)),
-                        clientDAO.get(result.getInt(TableColumns.CardTable.CLIENT_ID) )));
+                        clientDAO.get(result.getInt(TableColumns.CardTable.CLIENT_ID))));
             }
             return cards;
         }, "SELECT * FROM CARD");
     }
-    public void updatePin(Integer id, Integer pin) throws SQLException{
+
+    public void updatePin(Integer id, Integer pin) throws SQLException {
         executor.execUpdate("UPDATE CARD SET " +
-                TableColumns.CardTable.PIN + " =? WHERE "+
-                TableColumns.CardTable.ID + " =?",
+                        TableColumns.CardTable.PIN + " =? WHERE " +
+                        TableColumns.CardTable.ID + " =?",
                 pin.toString(), id.toString());
     }
 
-    public HashMap<Card,Integer> getCardsClient(Integer id) throws SQLException{
-        HashMap<Card,Integer> cards = new HashMap<>();
-        return executor.execQuery(result ->{
-           while (result.next()){
-               cards.put(new Card(
-                       result.getInt(TableColumns.CardTable.ID),
-                       result.getString(TableColumns.CardTable.NUMBER),
-                       billDAO.get(result.getInt(TableColumns.CardTable.BILL_ID)),
-                       clientDAO.get(result.getInt(TableColumns.CardTable.CLIENT_ID) )), new Integer(result.getInt(TableColumns.CardTable.PIN)));
-           }
-           return cards;
-        }, "SELECT * FROM CARD WHERE " + TableColumns.CardTable.CLIENT_ID + " = ?",id.toString());
+    public HashMap<Card, Integer> getCardsClient(Integer id) throws SQLException {
+        HashMap<Card, Integer> cards = new HashMap<>();
+        return executor.execQuery(result -> {
+            while (result.next()) {
+                cards.put(new Card(
+                        result.getInt(TableColumns.CardTable.ID),
+                        result.getString(TableColumns.CardTable.NUMBER),
+                        billDAO.get(result.getInt(TableColumns.CardTable.BILL_ID)),
+                        clientDAO.get(result.getInt(TableColumns.CardTable.CLIENT_ID))), new Integer(result.getInt(TableColumns.CardTable.PIN)));
+            }
+            return cards;
+        }, "SELECT * FROM CARD WHERE " + TableColumns.CardTable.CLIENT_ID + " = ?", id.toString());
     }
 
-    public HashMap<Card,Integer> getCardOfBill (Bill bill) throws SQLException {
-        return executor.execQuery(result ->{
-            HashMap<Card,Integer> cards = new HashMap<>();
+    public HashMap<Card, Integer> getCardOfBill(Bill bill) throws SQLException {
+        return executor.execQuery(result -> {
+            HashMap<Card, Integer> cards = new HashMap<>();
             if (!result.next())
                 return null;
-             cards.put(new Card(result.getInt(TableColumns.CardTable.ID), result.getString(TableColumns.CardTable.NUMBER),
-                    bill, clientDAO.get(result.getInt(TableColumns.CardTable.CLIENT_ID))),result.getInt(TableColumns.CardTable.PIN));
-             return cards;
-        }, "SELECT * FROM CARD WHERE "+ TableColumns.CardTable.BILL_ID + " = ?", new Integer(bill.getId()).toString());
+            cards.put(new Card(result.getInt(TableColumns.CardTable.ID), result.getString(TableColumns.CardTable.NUMBER),
+                    bill, clientDAO.get(result.getInt(TableColumns.CardTable.CLIENT_ID))), result.getInt(TableColumns.CardTable.PIN));
+            return cards;
+        }, "SELECT * FROM CARD WHERE " + TableColumns.CardTable.BILL_ID + " = ?", new Integer(bill.getId()).toString());
     }
 }

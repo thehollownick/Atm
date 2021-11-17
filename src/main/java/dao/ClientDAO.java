@@ -53,6 +53,7 @@ public class ClientDAO implements DAO<Client, Integer> {
         executor.execUpdate("DELETE FROM CLIENT WHERE " + TableColumns.ClientTable.ID + " = ?",
                 Integer.toString(client.getId()));
     }
+
     @Override
     public void update(Client client) throws SQLException {
         executor.execUpdate("UPDATE CLIENT SET " +

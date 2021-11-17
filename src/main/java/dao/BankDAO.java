@@ -3,18 +3,18 @@ package dao;
 import dao.executor.Executor;
 import entity.Bank;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankDAO implements DAO<Bank,Integer> {
+public class BankDAO implements DAO<Bank, Integer> {
 
     private final Executor executor;
 
     public BankDAO() throws SQLException {
-        this.executor=new Executor();
+        this.executor = new Executor();
     }
+
     @Override
     public Bank get(Integer id) throws SQLException {
         return executor.execQuery(result -> {

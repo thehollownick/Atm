@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AtmDAO implements DAO<ATMMachine,Integer> {
+public class AtmDAO implements DAO<ATMMachine, Integer> {
 
     private final Executor executor;
     private final BankDAO bankDAO;
@@ -43,13 +43,13 @@ public class AtmDAO implements DAO<ATMMachine,Integer> {
         return executor.execQuery(result -> {
             if (!result.next())
                 return null;
-            HashMap<Integer,Integer> temp = new HashMap<>();
-            temp.put(100,result.getInt(TableColumns.AtmTable.M100));
-            temp.put(200,result.getInt(TableColumns.AtmTable.M200));
-            temp.put(500,result.getInt(TableColumns.AtmTable.M500));
-            temp.put(1000,result.getInt(TableColumns.AtmTable.M1000));
-            temp.put(2000,result.getInt(TableColumns.AtmTable.M2000));
-            temp.put(5000,result.getInt(TableColumns.AtmTable.M5000));
+            HashMap<Integer, Integer> temp = new HashMap<>();
+            temp.put(100, result.getInt(TableColumns.AtmTable.M100));
+            temp.put(200, result.getInt(TableColumns.AtmTable.M200));
+            temp.put(500, result.getInt(TableColumns.AtmTable.M500));
+            temp.put(1000, result.getInt(TableColumns.AtmTable.M1000));
+            temp.put(2000, result.getInt(TableColumns.AtmTable.M2000));
+            temp.put(5000, result.getInt(TableColumns.AtmTable.M5000));
             return new ATMMachine(integer,
                     bankDAO.get(result.getInt(TableColumns.AtmTable.BANK_ID)),
                     temp);
@@ -87,14 +87,14 @@ public class AtmDAO implements DAO<ATMMachine,Integer> {
     public List<ATMMachine> getAll() throws SQLException {
         List<ATMMachine> atmMachines = new ArrayList<>();
         return executor.execQuery(result -> {
-            HashMap<Integer,Integer> temp = new HashMap<>();
+            HashMap<Integer, Integer> temp = new HashMap<>();
             while (result.next()) {
-                temp.put(100,result.getInt(TableColumns.AtmTable.M100));
-                temp.put(200,result.getInt(TableColumns.AtmTable.M200));
-                temp.put(500,result.getInt(TableColumns.AtmTable.M500));
-                temp.put(1000,result.getInt(TableColumns.AtmTable.M1000));
-                temp.put(2000,result.getInt(TableColumns.AtmTable.M2000));
-                temp.put(5000,result.getInt(TableColumns.AtmTable.M5000));
+                temp.put(100, result.getInt(TableColumns.AtmTable.M100));
+                temp.put(200, result.getInt(TableColumns.AtmTable.M200));
+                temp.put(500, result.getInt(TableColumns.AtmTable.M500));
+                temp.put(1000, result.getInt(TableColumns.AtmTable.M1000));
+                temp.put(2000, result.getInt(TableColumns.AtmTable.M2000));
+                temp.put(5000, result.getInt(TableColumns.AtmTable.M5000));
                 atmMachines.add(new ATMMachine(
                         result.getInt(TableColumns.AtmTable.ID),
                         bankDAO.get(result.getInt(TableColumns.BillTable.BANK_ID)),
@@ -107,21 +107,21 @@ public class AtmDAO implements DAO<ATMMachine,Integer> {
     public List<ATMMachine> getAtmOfBank(Integer id) throws SQLException {
         List<ATMMachine> atmMachines = new ArrayList<>();
         return executor.execQuery(result -> {
-            HashMap<Integer,Integer> temp = new HashMap<>();
-            while (result.next()){
-            temp.put(100,result.getInt(TableColumns.AtmTable.M100));
-            temp.put(200,result.getInt(TableColumns.AtmTable.M200));
-            temp.put(500,result.getInt(TableColumns.AtmTable.M500));
-            temp.put(1000,result.getInt(TableColumns.AtmTable.M1000));
-            temp.put(2000,result.getInt(TableColumns.AtmTable.M2000));
-            temp.put(5000,result.getInt(TableColumns.AtmTable.M5000));
-            atmMachines.add(new ATMMachine(
-                    result.getInt(TableColumns.AtmTable.ID),
-                    bankDAO.get(result.getInt(TableColumns.BillTable.BANK_ID)),
-                    temp));
-        }
-        return atmMachines;
-    }, "SELECT * FROM ATM WHERE "+TableColumns.AtmTable.BANK_ID +" = ?",id.toString());
+            HashMap<Integer, Integer> temp = new HashMap<>();
+            while (result.next()) {
+                temp.put(100, result.getInt(TableColumns.AtmTable.M100));
+                temp.put(200, result.getInt(TableColumns.AtmTable.M200));
+                temp.put(500, result.getInt(TableColumns.AtmTable.M500));
+                temp.put(1000, result.getInt(TableColumns.AtmTable.M1000));
+                temp.put(2000, result.getInt(TableColumns.AtmTable.M2000));
+                temp.put(5000, result.getInt(TableColumns.AtmTable.M5000));
+                atmMachines.add(new ATMMachine(
+                        result.getInt(TableColumns.AtmTable.ID),
+                        bankDAO.get(result.getInt(TableColumns.BillTable.BANK_ID)),
+                        temp));
+            }
+            return atmMachines;
+        }, "SELECT * FROM ATM WHERE " + TableColumns.AtmTable.BANK_ID + " = ?", id.toString());
     }
 
 

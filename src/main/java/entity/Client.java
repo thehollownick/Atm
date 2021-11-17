@@ -8,8 +8,6 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import java.util.Map;
-
 public class Client implements Serializable {
     private int id;
     private String name;
@@ -68,7 +66,8 @@ public class Client implements Serializable {
     public HashMap<Integer, Integer> takeMoney(ATMMachine atm, Card card, int rub) throws SQLException, RemoteException, NotBoundException {
         return atm.giveMoney(card, rub);
     }
-    public  HashMap<Integer,Integer> takeAllMoney(ATMMachine atm, Card card) throws SQLException, RemoteException, NotBoundException {
+
+    public HashMap<Integer, Integer> takeAllMoney(ATMMachine atm, Card card) throws SQLException, RemoteException, NotBoundException {
         return atm.giveAllMoney(card);
     }
 }

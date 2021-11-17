@@ -1,7 +1,6 @@
 package dao;
 
 import dao.executor.Executor;
-import entity.ATMMachine;
 import entity.Bill;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,7 @@ public class BillDAO implements DAO<Bill, Integer> {
     private final Executor executor;
     private final BankDAO bankDAO;
     private static final Logger LOGGER = LoggerFactory.getLogger(BillDAO.class);
+
     public BillDAO() throws SQLException {
         this.executor = new Executor();
         this.bankDAO = new BankDAO();
@@ -45,7 +45,7 @@ public class BillDAO implements DAO<Bill, Integer> {
 
     @Override
     public void update(Bill bill) throws SQLException {
-        LOGGER.error("bill {}",bill);
+        LOGGER.error("bill {}", bill);
         executor.execUpdate("UPDATE BILL SET " +
                         TableColumns.BillTable.RUB + " = ?," +
                         TableColumns.BillTable.PENNY + " = ?," +
@@ -77,6 +77,7 @@ public class BillDAO implements DAO<Bill, Integer> {
             return bills;
         }, "SELECT * FROM BILL");
     }
+
     public List<Bill> getBillsOfBank(Integer integer) throws SQLException {
         List<Bill> bills = new ArrayList<>();
         return executor.execQuery(result -> {
@@ -88,13 +89,14 @@ public class BillDAO implements DAO<Bill, Integer> {
                         bankDAO.get(result.getInt(TableColumns.BillTable.BANK_ID))));
             }
             return bills;
-        }, "SELECT * FROM BILL WHERE "+TableColumns.BillTable.BANK_ID+ " =?",integer.toString());
+        }, "SELECT * FROM BILL WHERE " + TableColumns.BillTable.BANK_ID + " =?", integer.toString());
     }
-    public int getBalance(Integer id) throws SQLException{
+
+    public int getBalance(Integer id) throws SQLException {
         return executor.execQuery(result -> {
-        if (!result.next())
-            return null;
-        return result.getInt(TableColumns.BillTable.RUB);
-    }, "SELECT " +TableColumns.BillTable.RUB+" FROM BILL WHERE " + TableColumns.BillTable.ID + " = ?", id.toString());
+            if (!result.next())
+                return null;
+            return result.getInt(TableColumns.BillTable.RUB);
+        }, "SELECT " + TableColumns.BillTable.RUB + " FROM BILL WHERE " + TableColumns.BillTable.ID + " = ?", id.toString());
     }
 }
